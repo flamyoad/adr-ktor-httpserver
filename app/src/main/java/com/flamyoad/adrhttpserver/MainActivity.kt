@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import io.ktor.http.*
+import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.compression.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +32,25 @@ class MainActivity : AppCompatActivity() {
 
     private val server by lazy {
         embeddedServer(CIO, port = 8080, watchPaths = emptyList()) {
+            install(CallLogging)
+
+            install(CORS) {
+                anyHost()
+            }
+
+            // https://ktor.io/docs/serialization-client.html#receive_send_data
+            install(ContentNegotiation) {
+                gson {
+                    setPrettyPrinting()
+                    disableHtmlEscaping()
+                }
+            }
+
+            // gzip static images
+            install(Compression) {
+                gzip()
+            }
+
             routing {
                 get("/") {
 //                    call.respond(HttpStatusCode.BadRequest)

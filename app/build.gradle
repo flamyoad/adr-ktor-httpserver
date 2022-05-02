@@ -52,7 +52,13 @@ dependencies {
 //    implementation "io.ktor:ktor-server-netty:$ktor_version"
 //    implementation "io.ktor:ktor-server-jetty:$ktor_version"
     implementation "io.ktor:ktor-server-cio:$ktor_version"
-    implementation "io.ktor:ktor-client-gson:$ktor_version"
+    implementation "io.ktor:ktor-server-websockets:$ktor_version"
+    implementation "io.ktor:ktor-server-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-server-compression:$ktor_version"
+    implementation "io.ktor:ktor-server-call-logging:$ktor_version"
+    implementation "io.ktor:ktor-server-cors:$ktor_version"
+    implementation "io.ktor:ktor-serialization-gson:$ktor_version"
+    implementation "io.ktor:ktor-websockets:$ktor_version"
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
